@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Brief</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a0000, #000000);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        .mission-container {
+            background: rgba(255, 0, 0, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+            z-index: 1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #FF0000;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .input-container {
+            margin-top: 20px;
+        }
+
+        input {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #FF0000;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            font-size: 1.1em;
+            width: 200px;
+            margin-right: 10px;
+        }
+
+        button {
+            background: linear-gradient(45deg, #FF0000, #8B0000);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .success-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .success-content {
+            background: linear-gradient(45deg, #FF0000, #8B0000);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            transform: scale(0);
+            animation: modalPop 0.5s forwards;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0) rotate(0deg); }
+            70% { transform: scale(1.1) rotate(5deg); }
+            85% { transform: scale(1.1) rotate(-5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .success-content h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .password {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            margin: 20px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mission-container">
+        <h1>Mission Brief</h1>
+        <p>Agent X, your mission funds total ₹13,877. To unlock the next phase of your operation, you must wire ₹4,562 to an undercover contact. Once the transfer is complete, how much will remain in your covert account?</p>
+        <div class="input-container">
+            <input type="number" id="answer" placeholder="Enter your answer">
+            <button onclick="checkAnswer()">Submit</button>
+        </div>
+    </div>
+
+    <div class="success-modal">
+        <div class="success-content">
+            <h2>🎉 Mission Accomplished! 🎉</h2>
+            <p>Congratulations, Agent! You've successfully completed the mission.</p>
+            <div class="password" id="hiddenPassword"></div>
+            <p>This password will grant you access to the next phase.</p>
+        </div>
+    </div>
+
+    <audio id="successSound" src="./felicidades-42299.mp3"></audio>
+
+    <script>
+        function derivePassword() {
+            const part1 = String.fromCharCode(82, 69, 68);
+            const part2 = "_LOCK_";
+            const part3 = (10000 - 685).toString();
+
+            return part1 + part2 + part3;
+        }
+
+        function celebrate() {
+            const modal = document.querySelector('.success-modal');
+            modal.style.display = 'flex';
+            
+            document.getElementById('hiddenPassword').innerText = "Password: " + derivePassword();
+
+            const successSound = document.getElementById('successSound');
+            successSound.play();
+        }
+
+        function checkAnswer() {
+            const answer = document.getElementById('answer').value;
+            if (answer === '9315') {
+                celebrate();
+            } else {
+                alert('Incorrect answer. Try again.');
+            }
+        }
+    </script>
+</body>
+</html>
